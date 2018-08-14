@@ -13,6 +13,10 @@ $(document).ready(function(){
 		location.href="/gang/chart";
 		
 	});
+	$("#gotable").on("click",function(){
+		location.href="";
+		
+	});
 });
 
 </script>
