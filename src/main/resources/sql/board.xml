@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<select id="boardlist" resultType="HashMap">
+		select no,id,content,DATE_FORMAT(dep_date,'%Y-%m-%d') as arr,DATE_FORMAT(ret_date,'%Y-%m-%d') as dep from board where delYN='N'
+	</select>
+	<insert id="boardinsert" parameterType="HashMap">
+		insert into board 
+		   (id, content, dep_date, ret_date)
+		values
+		   (#{id},#{content},#{dep_date},#{ret_date});
+	</insert>
+	<update id="deleteboard" parameterType="HashMap">
+		update board
+		set delYn = 'Y'
+		where no = #{no} and id=#{id}
+	</update>
+	<update id="deleteboardadmin" parameterType="HashMap">
+		update board
+		set delYn = 'Y'
+		where no = #{no}
+	</update>
+	
+	<update id="updateboard" parameterType="HashMap">
+		update board
+		set content=#{content}, dep_date=#{dep_date}, ret_date=#{ret_date}
+		where no = #{no} and id=#{id}
+	</update>
+	
+	<insert id="sendmessage" parameterType="HashMap">
+		insert into msg 
+		   (to_, title, message, from_)
+		values
+		   (#{to_},#{title},#{message},#{from_});
+	</insert>
+	<select id="messagelist" parameterType="HashMap" resultType="HashMap">
+		select * from msg where to_=#{to_} and delYN='N'
+	</select>
+	
+	<update id="deletemessage" parameterType="HashMap">
+		update msg
+		set delYn = 'Y'
+		where no = #{no}
+	</update>
+</mapper>

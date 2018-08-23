@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.mapreducer;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class Mapper_time extends org.apache.hadoop.mapreduce.Mapper<LongWritable
 		AirBean ab = new AirBean(value);
 		Text outputKey = new Text();
 		for(int i=0;i<24;i++) {
-			outputKey.set(i+" ~ "+(i+1)+"시");
+			outputKey.set(String.format("%02d", i)+"시");
 			DoubleWritable outputValue = new DoubleWritable(ab.getTime().get(i));
 			context.write(outputKey, outputValue);
 			

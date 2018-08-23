@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.controller;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.servlet.ModelAndView;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -39,13 +42,20 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/see_something", method = RequestMethod.GET)
-	public String see_something(Locale locale, Model model) {
+	public String see_something(Locale locale, Model model,HttpServletRequest req) {
+
 		return "see_something";
 	}
 	
 	@RequestMapping(value = "/chart", method = RequestMethod.GET)
-	public String chart(Locale locale, Model model) {
+	public String chart(Locale locale, Model model,HttpServletRequest request,HttpSession session) {
+
 		return "chart";
+	}
+	
+	@RequestMapping(value = "/table", method = RequestMethod.GET)
+	public String table(Locale locale, Model model) {
+		return "table";
 	}
 	
 	@RequestMapping(value = "/month_chart", method = RequestMethod.GET)

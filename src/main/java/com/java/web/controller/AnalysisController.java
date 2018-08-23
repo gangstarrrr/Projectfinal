@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.controller;
 
 
 import java.net.URI;
@@ -26,6 +26,11 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.java.web.mapreducer.Mapper_month;
+import com.java.web.mapreducer.Mapper_reg;
+import com.java.web.mapreducer.Mapper_time;
+import com.java.web.mapreducer.Reducer;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;

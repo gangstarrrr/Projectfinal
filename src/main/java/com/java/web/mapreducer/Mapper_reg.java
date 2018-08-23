@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.mapreducer;
 
 import java.io.IOException;
 

@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%-- <%@ page session="false" %> --%>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>테스트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" type="text/css" href="/gang/resources/css/see_something.css">
 <style>
 html{background-image: ;}
 /*나중에 배경 투명도 조절해서 낮춰버리기*/
@@ -26,8 +27,17 @@ h1 {text-align: center; padding: 20px 0;}
 </style>
 <script>
 $(document).ready(function(){
+	
+	if(<%=session.getAttribute("status")%>==null){
+		alert("PLZ LOGIN FIRST");
+		location.href="/gang/see_something";
+	}
+	$("#logout").on("click",function(){
+		location.href="/gang/logout";
+		alert("LOGOUT DONE");
+	});
 	var month;
-	$.ajax({
+	/* $.ajax({
 		type:"post",
 		url:"/gang/analysis",
 		data:{"btn":'3',"month":'2015.csv'}
@@ -45,7 +55,7 @@ $(document).ready(function(){
 		    function drawChart() {
 		    	var chartData = new google.visualization.DataTable();
  		    	chartData.addColumn("string", "Month");
-	    		chartData.addColumn("number", "amount");
+	    		chartData.addColumn("number", "유동인구량");
 
 		        var option = {
         		 hAxis: {
@@ -53,7 +63,12 @@ $(document).ready(function(){
         	        },
         	        vAxis: {
         	          title: 'amount'
-        	        }
+        	        } ,
+        	        height : 400,
+                    width  : 1600,
+                    pointSize: 5,
+                    legend : 'none',
+                    colors:['red','#004411']
 		        };
 		        
 		        $.each(result, function(index, value) {
@@ -69,7 +84,7 @@ $(document).ready(function(){
 		      }
 		});
 		
-	})
+	}) */
 	
 	$.ajax({
 		type:"post",
@@ -104,16 +119,37 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<!-- Navbar -->
+<div class="top">
+  <div class="bar white wide padding card">
+    <a href="/gang" class="bar-item button" id="gang"><b style="color:black">HōLA JEJU</b></a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="right hide-small" id="silo">
+    <c:if test="${sessionScope.status==0}">
+        <button onclick="document.getElementById('sign').style.display='block'" class="bar-item button m_side" style="margin: 0">SIGN</button>
+        <button onclick="document.getElementById('login').style.display='block'" class="bar-item button m_side" style="margin: 0">LOGIN</button>
+    </c:if>
+    <c:if test="${sessionScope.status==null}">
+        <button onclick="document.getElementById('sign').style.display='block'" class="bar-item button m_side" style="margin: 0">SIGN</button>
+        <button onclick="document.getElementById('login').style.display='block'" class="bar-item button m_side" style="margin: 0">LOGIN</button>
+    </c:if>
+    <c:if test="${sessionScope.status==1}">
+    	<button class="bar-item button m_side" style="margin: 0; height:47px;cursor:default">${sessionScope.user.name}</button>
+        <button onclick="document.getElementById('logout')" class="bar-item button m_side" id="logout" style="margin: 0">LOGOUT</button>
+    </c:if>
+    </div>
+  </div>
+</div>
 	<div id="wrap">
 		<div style='height: 100px'></div>
         <div id="img"></div>
-		<h1>제주도 유동인구 분석</h1>
+		<h1>제주도 유동인구 분석 ${sessionScope}</h1>
         <hr>
-		<div id="step1">
+		<div id="step1" style='height: 450px'>
 			<h3>2015년 월별 유동인구 분석 결과</h3>
 			<div id="chart_body">Chart 영역</div>
-			<hr>
 		</div>
+		<hr>
         <div id="step2">
 			<h3>2015년 월별 데이터 분석</h3>
 			<ol id="dataList">
