@@ -14,7 +14,7 @@
 	
 	<!-- DataSource 생성 -->
  	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url" value="jdbc:mysql://192.168.1.90:3306/test" />
+		<property name="url" value="jdbc:mysql://localhost:3306/test" />
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
 		<property name="username" value="root" />
 	    <property name="password" value="1234" />
@@ -30,4 +30,12 @@
   	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="factoryBean" />
 	</bean>  
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <property name="maxUploadSize" value="20971520" />
+      <!-- 20MB -->
+      <property name="maxInMemorySize" value="209715200" />
+      <!-- 200MB -->
+   </bean>   
 </beans>

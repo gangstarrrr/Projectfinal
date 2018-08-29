@@ -35,8 +35,8 @@ body{margin:0}
 .padding-large{padding:12px 24px!important} 
 .float_left{float: left}
 .float_right{float: right}
-.left_img{background-image: url(/gang/resources/img/home.png);left: 0%}
-.right_img{background-image: url(/gang/resources/img/img.jpg);right: 0%;transform: translateX(30px)}
+.left_img{background-image: url(/resources/img/%EB%B0%94%EB%8B%A4.jpg);left: 0%}
+.right_img{background-image: url(/resources/img/img.jpg);right: 0%;transform: translateX(30px)}
 .position_absoult{position:absolute;top:0%}
 .black{color:#fff!important; font-size: 50px}
     #gotable:hover, #gochart:hover{cursor: pointer;color: black}
@@ -125,7 +125,7 @@ body{margin:0}
 .padding-large{padding:12px 24px!important} 
 
 table.type {
-    transform: translateY(100px);
+    transform: translateY(70px);
     border-collapse: collapse;
     text-align: left;
     line-height: 1.5;
@@ -163,7 +163,7 @@ table.type td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
-table.type tbody tr td:nth-child(7) div,table.type tbody tr td:nth-child(8) div{
+table.type tbody tr td:nth-child(8) div,table.type tbody tr td:nth-child(9) div{
     background-color: #959595;
     color: white;
     border-radius:5px;
@@ -172,8 +172,8 @@ table.type tbody tr td:nth-child(7) div,table.type tbody tr td:nth-child(8) div{
     box-shadow: 3px 3px 3px #767676;
     cursor:pointer;
 }
-    
-    table.type tbody tr td:nth-child(6) div{
+
+table.type tbody tr td:nth-child(7) div{
     background-color: #5a67ac;
     color: white;
     border-radius:5px;
@@ -212,7 +212,8 @@ a:link,a:visited{text-decoration:none!important;color: white!important;}
 button:hover {
     opacity: 0.8;
 }
-input[type=text], input[type=password],input[type=eh]{
+
+input[type=text], input[type=password],input[type=file]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

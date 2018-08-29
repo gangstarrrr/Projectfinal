@@ -8,7 +8,7 @@
 <title>테스트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<link rel="stylesheet" type="text/css" href="/gang/resources/css/see_something.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/see_something.css">
 <style>
 html{background-image: ;}
 /*나중에 배경 투명도 조절해서 낮춰버리기*/
@@ -16,36 +16,42 @@ html, body {padding: 0; margin: 0;}
 h1 {text-align: center; padding: 20px 0;}
 #wrap {width: 80%; margin-left: 10%;}
 #dataList li {cursor: pointer;list-style: none;text-align: center}
-#dataList li:hover {background-color: yellow;}
+#dataList li:hover {background-color: #e8acc5;}
 #bar_body {width: 100%; background-color: red; margin-bottom: 50px;}
 #bar_div {width: 0%; height: 25px; background-color: red; text-align: center; font-weight: bold; color: white;}
 #btn1, #btn2 {width: 100%;; display: inline-block;}
-.active {background-color: yellow;}
+.active {background-color: #b1c6e6;}
 #chart_body {width: 100%; height: 300px;}
-#img{background-image: url(/gang/resources/img/%ED%9D%94%EB%93%A4%ED%9D%94%EB%93%A4.gif);width: 230px;height: 200px;position: absolute;top: 0;background-size: cover;}
+#img{background-image: url(/resources/img/%EA%B1%B8%EC%96%B4%EA%B0%90.gif);width: 220px;height: 190px;position: absolute;top: 40px;background-size: cover;}
 
 </style>
 <script>
 $(document).ready(function(){
-	
+	$(document).on('scroll touchmove mousewheel', function(event) { 
+		// 터치무브와 마우스휠 스크롤 방지    
+		event.preventDefault();     
+		event.stopPropagation();     
+		return false; });
+	$("#loading").css("display", "block");
+    $("#dark").css("display", "block");
 	if(<%=session.getAttribute("status")%>==null){
 		alert("PLZ LOGIN FIRST");
-		location.href="/gang/see_something";
+		location.href="/see_something";
 	}
 	$("#logout").on("click",function(){
-		location.href="/gang/logout";
+		location.href="/logout";
 		alert("LOGOUT DONE");
 	});
 	var month;
-	/* $.ajax({
+	$.ajax({
 		type:"post",
-		url:"/gang/analysis",
+		url:"/analysis",
 		data:{"btn":'3',"month":'2015.csv'}
 	}).done(function(data){
 		name=data.name;
 		$.ajax({
 			type:"post",
-			url:"/gang/readfile",
+			url:"/readfile",
 			data:{"name":name}
 		}).done(function(data){
 			var result = data.result;
@@ -66,9 +72,10 @@ $(document).ready(function(){
         	        } ,
         	        height : 400,
                     width  : 1600,
-                    pointSize: 5,
+                    pointSize: 15,
                     legend : 'none',
-                    colors:['red','#004411']
+                    colors:['#7b9be2','#3d5f95'],
+                    lineWidth: 8
 		        };
 		        
 		        $.each(result, function(index, value) {
@@ -82,13 +89,16 @@ $(document).ready(function(){
 		        var chart = new google.visualization.LineChart(document.getElementById('chart_body'));
 		        chart.draw(chartData, option);
 		      }
+		    $("#loading").css("display", "none");
+		    $("#dark").css("display", "none");
+		    $(document).off('scroll touchmove mousewheel');
 		});
 		
-	}) */
+	}) 
 	
 	$.ajax({
 		type:"post",
-		url:"/gang/dir"
+		url:"/dir"
 	}).done(function(data){
 		var result=data.result;
 		
@@ -104,11 +114,11 @@ $(document).ready(function(){
 
 		$("#btn1").on("click",function(){
 			console.log(month);
- 			location.href = "/gang/month_chart?month=" + month;
+ 			location.href = "/month_chart?month=" + month;
 		});
 		
 		$("#btn2").on("click",function(){
-			location.href="/gang/see_something";
+			location.href="/see_something";
 			
 		});
 	});
@@ -119,10 +129,14 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<!-- 로딩이미지 -->
+<div id="dark" style="position: absolute; top: 0;left: 0; width: 100% ; height: 100%;display: none;background-color: rgba(255, 255, 255, 0.87); margin-left: : 0;z-index:10"></div>
+<div id="loading" style="position: absolute; top: 30%;left: 40%; width:400px;height:400px;background-image: url(/resources/img/loading_gif_servere.gif);z-index:10;background-position: center;background-size: cover;display:none">
+</div>
 <!-- Navbar -->
 <div class="top">
   <div class="bar white wide padding card">
-    <a href="/gang" class="bar-item button" id="gang"><b style="color:black">HōLA JEJU</b></a>
+    <a href="/" class="bar-item button" id="gang"><b style="color:black">HōLA JEJU</b></a>
     <!-- Float links to the right. Hide them on small screens -->
     <div class="right hide-small" id="silo">
     <c:if test="${sessionScope.status==0}">
@@ -141,9 +155,9 @@ $(document).ready(function(){
   </div>
 </div>
 	<div id="wrap">
-		<div style='height: 100px'></div>
+		<div style='height: 150px'></div>
         <div id="img"></div>
-		<h1>제주도 유동인구 분석 ${sessionScope}</h1>
+		<h1>제주도 유동인구 분석 </h1>
         <hr>
 		<div id="step1" style='height: 450px'>
 			<h3>2015년 월별 유동인구 분석 결과</h3>
@@ -157,11 +171,11 @@ $(document).ready(function(){
 			<hr>
 		</div>
 		<div id="step3">
-			<button type="button" id="btn1">선택년도 분석하기</button>
+			<button type="button" id="btn1" style="background-color:#274a81!important">선택년도 분석하기</button>
 			<hr>
 		</div>
 		<div id="step4">
-			<button type="button" id="btn2">돌아가기</button>
+			<button type="button" id="btn2" style="background-color:#272727">돌아가기</button>
 			<hr>
 		</div>
 	</div>

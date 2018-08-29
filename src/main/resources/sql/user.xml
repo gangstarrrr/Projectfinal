@@ -3,12 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
+	<insert id="userInsert_photo" parameterType="HashMap">
+		insert into user 
+			(id, password, name, gender, email, intro, photo_path,photo_dns) 
+		values 
+			(#{id}, #{password}, #{name}, #{gender}, #{email}, #{intro}, #{photo_path},#{photo_dns})
+	</insert>
+	
 	<insert id="userInsert" parameterType="HashMap">
 		insert into user 
 			(id, password, name, gender, email, intro) 
 		values 
 			(#{id}, #{password}, #{name}, #{gender}, #{email}, #{intro})
 	</insert>
+	
+	<update id="userUpdate_photo" parameterType="HashMap">
+		update user 
+		set password=#{password},name=#{name},gender=#{gender},email=#{email},intro=#{intro},photo_path=#{photo_path},photo_dns=#{photo_dns}
+		where id=#{id}
+	</update>
+	
+	<update id="userUpdate" parameterType="HashMap">
+		update user 
+		set password=#{password},name=#{name},gender=#{gender},email=#{email},intro=#{intro}
+		where id=#{id}
+	</update>
 	
 	<select id="checkId" parameterType="HashMap" resultType="Integer">
 	    SELECT NVL(COUNT(*),0)

@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function(){
 	$("#see").on("click",function(){
-		location.href="/gang/see_something";
+		location.href="/see_something";
 		
 	});
 });
@@ -23,7 +23,7 @@ body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%;padding: 0}
 body{margin:0}
 .bgimg {
-    background-image: url('/gang/resources/img/home.png');
+    background-image: url('/resources/img/home.png');
     min-height: 100%;
     background-position: center;
     background-size: cover;

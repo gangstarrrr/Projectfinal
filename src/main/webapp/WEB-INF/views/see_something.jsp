@@ -9,7 +9,7 @@
 <title>to do something</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="/gang/resources/css/see_something.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/see_something.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
@@ -23,6 +23,16 @@
     display: inline-block!important;
     border: 1px solid #ccc!important;
     box-sizing: border-box!important;}
+img.avatar {
+    width: 20vw;
+    height:20vw;
+    border-radius: 50%;
+}
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
 </style>
 <script>
 $(document).ready(function(){
@@ -70,7 +80,7 @@ $(document).ready(function(){
 			}).done(function(data){
 				var d = JSON.parse(data);
 				alert(d.msg);
-				location.href="/gang/see_something?msg=1";
+				location.href="/see_something?msg=1";
 			});
 		})
 		
@@ -80,7 +90,7 @@ $(document).ready(function(){
 	 $("#gochart").on("click",function(){
 		 if(<%=session.getAttribute("status")%>==1){
 			 	
-			 location.href="/gang/chart";
+			 location.href="/chart";
 			}else{
 				alert("PLZ LOGIN FIRST");
 			}
@@ -89,7 +99,7 @@ $(document).ready(function(){
 	}); 
 	
 	$("#logout").on("click",function(){
-		location.href="/gang/logout";
+		location.href="/logout";
 		alert("LOGOUT DONE");
 	});
 	
@@ -102,7 +112,8 @@ $(document).ready(function(){
 		}
     });
 	
-	$("#login2").on("submit",function(){
+	$("#login2").on("submit",function(event){
+		event.preventDefault();
 		var queryString = $("#login2").serialize();
 		$.ajax({
 			type:"post",
@@ -112,12 +123,57 @@ $(document).ready(function(){
 			var d = JSON.parse(data);
 			console.log(d.msg);
 			alert(d.msg);
-			location.href="/gang/see_something";
+			location.href="/see_something";
 		})
-		return false;
 	});
 	
+	$("#signup").on("submit",function(event){
+		event.preventDefault();
+		
+		if($("input[name=photo]").val()==""){
+			$("input[name=photo]").val(null);
+		}
+		
+ 		$.ajax({
+ 			type:"post",
+ 			url:"userInsert",
+ 			data:new FormData($("#signup")[0]),
+ 			contentType:false,
+            cache:false,
+            processData:false
+ 		}).done(function(data){
+ 			alert("WELCOME TO SIGNUP");
+ 			location.href="/see_something";
+ 		}); 
+	})
 	
+	$("#info_btn").on("click",function(){
+	  var image = document.getElementById('up_img');
+	  if($("#photo_dns").val()==""){
+		  image.src = "/resources/img/img_avatar2.png";
+	  }else{
+		  image.src=$("#photo_dns").val();
+	  }
+	})
+	
+	$("#infoup").on("submit",function(event){
+		event.preventDefault();
+		var id = $('#id_').val();
+		var formdata=new FormData($("#infoup")[0]);
+		formdata.append('id', id);
+		$.ajax({
+			type:"post",
+			url:"infoupdate",
+			data:formdata,
+ 			contentType:false,
+            cache:false,
+            processData:false
+		}).done(function(data){
+			alert("SUCCESS TO UPDATE YOUR INFOMATION");
+			location.href="/see_something";
+		})
+	})
+
 	
     $('input[type="checkbox"][name="gender"]').click(function(){
         //클릭 이벤트 발생한 요소가 체크 상태인 경우
@@ -158,20 +214,25 @@ if(para[1]=='msg=1'){
 }
 });
 
-function signup(){
-	alert("WELCOME TO SIGNUP");
-}
+function readURL(input) { 
+	if (input.files && input.files[0]) { 
+		var reader = new FileReader(); 
+		reader.onload = function (e) { 
+			$('#blah').attr('src', e.target.result); 
+			} 
+		reader.readAsDataURL(input.files[0]); 
+		document.getElementById('blah_con').style.display='block';	
+		} 
 
-function infoupdate(){
-	alert("SUCCESS TO UPDATE YOUR INFOMATION");
-}
+	}
+
+
+
 var idCheck = 0;
 
 function checkpw(){
 	var password=$(".o_password").val();
 	var id = $('#id_').val();
-	console.log(password);
-	console.log(id);
 	$.ajax({
 		data:{
 			password : password,
@@ -179,7 +240,7 @@ function checkpw(){
 		},
 		url:"checkpw",
 		success : function(data){
-			console.log(data);
+
 			if (data == '1') {
                 $(".o_password").css("background-color", "#B0F6AC");
                 $(".signupbtn").prop("disabled", false);
@@ -228,9 +289,9 @@ function deleteuserbtn(){
 				console.log(d.msg);
 				alert(d.msg);
 				if(d.status==0){
-					location.href="/gang/see_something";
+					location.href="/see_something";
 				}else{
-					location.href="/gang/logout";
+					location.href="/logout";
 				}
 			}
 		});
@@ -246,7 +307,7 @@ function deleteuserbtn(){
 <!-- Navbar -->
 <div class="top">
   <div class="bar white wide padding card">
-    <a href="/gang" class="bar-item button" id="gang"><b style="color:black">HōLA JEJU</b></a>
+    <a href="/" class="bar-item button" id="gang"><b style="color:black">HōLA JEJU</b></a>
     <!-- Float links to the right. Hide them on small screens -->
     <div class="right hide-small" id="silo">
     <c:if test="${sessionScope.status==0}">
@@ -258,7 +319,7 @@ function deleteuserbtn(){
         <button onclick="document.getElementById('login').style.display='block'" class="bar-item button m_side" style="margin: 0">LOGIN</button>
     </c:if>
     <c:if test="${sessionScope.status==1}">
-    	<button onclick="document.getElementById('infoupdate').style.display='block'" class="bar-item button m_side" style="margin: 0; height:47px;">${sessionScope.user.name}'s INFO</button>
+    	<button onclick="document.getElementById('infoupdate').style.display='block'" id="info_btn" class="bar-item button m_side" style="margin: 0; height:47px;">${sessionScope.user.name}'s INFO</button>
     	<button onclick="document.getElementById('checkm').style.display='block'" class="bar-item button m_side" style="margin: 0">MESSAGE</button>
         <button onclick="document.getElementById('logout')" class="bar-item button m_side" id="logout" style="margin: 0">LOGOUT</button>
     </c:if>
@@ -269,8 +330,9 @@ function deleteuserbtn(){
 <div id="login" class="modal">
 
   <form class="modal-content animate" method="post" id="login2">
+  <div class="imgcontainer">
       <span onclick="document.getElementById('login').style.display='none'" class="close" title="Close Modal">&times;</span>
-
+    </div>
     <div class="container">
       <label for="id"><b>ID</b></label>
       <input type="text" placeholder="Enter Username" name="id" required>
@@ -290,8 +352,11 @@ function deleteuserbtn(){
 <!-- 회원가입 폼 -->
     
 <div id="sign" class="modal">
-  <span onclick="document.getElementById('sign').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content animate" action="userInsert" onsubmit="signup()">
+  <form class="modal-content animate" id="signup" enctype="multipart/form-data">
+  <div class="imgcontainer">
+      <span onclick="document.getElementById('sign').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/resources/img/img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
     <div class="container">
       <h1>SIGN UP</h1>
       <p>Please fill in this form to create an account.</p>
@@ -308,13 +373,18 @@ function deleteuserbtn(){
       <label for="email"><b>Email</b></label>
       <input type="email" placeholder="Enter Email" name="email" required>
         
-      <label for="intro"><b>Gender</b></label><br>
+      <label for="gender"><b>Gender</b></label><br>
       <input type="checkbox" name="gender" value="남" checked="checked"> MALE<br>
       <input type="checkbox" name="gender" value="여"> FEMALE
         <br>
       <label for="intro"><b>Introduce</b></label>
       <input type="text" placeholder="Enter Your Plan" name="intro" style="height:100px"  required>
-
+	  
+	  <label for="intro"><b>Photo</b></label>
+	  <input type="file" name="photo" class="file" onchange="readURL(this);">
+	  <div class="imgcontainer" style="display:none" id="blah_con">
+      <img id="blah" src="#" alt="your image" class="avatar" />
+    	</div> 
       <div class="clearfix">
         <button type="button" onclick="document.getElementById('sign').style.display='none'" class="cancelbtn2" style="background-color: #e55959">Cancel</button>
         <button type="submit" class="signupbtn" style="background-color:#6e9dcc">SIGN UP</button>
@@ -326,8 +396,11 @@ function deleteuserbtn(){
 <!-- 정보수정 폼 -->
     
 <div id="infoupdate" class="modal" style="z-index:5;">
-  <span onclick="document.getElementById('infoupdate').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content animate" action="infoupdate" onsubmit="infoupdate()">
+  <form class="modal-content animate" id="infoup">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('infoupdate').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img id="up_img" alt="Avatar" class="avatar">
+    </div>
     <div class="container">
       <h1>${sessionScope.user.id}'s INFOMATION UPDATE</h1>
       <p>Please fill in this form to update an account.</p>
@@ -340,6 +413,7 @@ function deleteuserbtn(){
         
       <label for="name"><b>Name</b></label>
       <input type="text" placeholder="Enter name" name="name" value="${sessionScope.user.name}" required>
+      <input type="hidden" name="photo_" id="photo_dns" value="${sessionScope.user.photo_dns}" required>
         
       <label for="email"><b>Email</b></label>
       <input type="email" placeholder="Enter Email" name="email" value="${sessionScope.user.email}" required>
@@ -350,10 +424,13 @@ function deleteuserbtn(){
         <br>
       <label for="intro"><b>Introduce</b></label>
       <input type="text" placeholder="Enter Your Plan" name="intro" style="height:100px" value="${sessionScope.user.intro}" required>
-
+	  
+	  <label for="intro"><b>Photo</b></label>
+	  <input class="file" type="file" name="photo" onchange="readURL(this);">
+	  
       <div class="clearfix">
         <button type="button" onclick="document.getElementById('infoupdate').style.display='none'" class="cancelbtn2" style="background-color: #e55959">Cancel</button>
-        <button type="submit" class="signupbtn" style="background-color:#6e9dcc">SIGN UP</button>
+        <button type="submit" class="signupbtn" style="background-color:#6e9dcc">UPDATE</button>
         <button type="button" class="deleteuserbtn" style="background-color:#2f2d36" onclick="deleteuserbtn()">LEAVE MEMBERSHIP</button>
       </div>
     </div>
@@ -362,8 +439,12 @@ function deleteuserbtn(){
 
 <!-- 쪽지 확인 폼 -->
 <div id="checkm" class="modal" style="z-index:5!important;">
-  <span onclick="document.getElementById('checkm').style.display='none'" class="close" title="Close Modal">&times;</span>
-    <div class="container modal-content animate">
+	<div class="modal-content animate">
+	
+	<div class="imgcontainer">
+      <span onclick="document.getElementById('checkm').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+    <div class="container">
       <h1>MESSAGE BOX</h1>
       
       <div id="msg_list">
@@ -372,7 +453,10 @@ function deleteuserbtn(){
     <div class="clearfix">
         <button type="button" onclick="document.getElementById('checkm').style.display='none'" style="background-color: #e55959;color:white">Cancel</button>
     </div>
-    </div>   
+    </div>  
+	
+	</div>
+	 
 </div>
 
 <!-- contents -->
