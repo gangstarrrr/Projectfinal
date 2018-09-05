@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 
 <html>
-<title>제주도 유동 인구분석과 동행찾기</title>
+<title>HOLA JEJU</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -32,10 +32,10 @@ body{margin:0}
 .animate-opacity{animation:opac 0.8s}@keyframes opac{from{opacity:0} to{opacity:1}}
 .text-white{color:#fff!important}
 .display-middle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%)}
-.jumbo{font-size:64px!important;transform: translateY(-110px)} .jumbo:hover{cursor: pointer}
+.jumbo{font-size:100px!important;transform: translateY(-150px)} .jumbo:hover{cursor: pointer;color:#52505c}
 .animate-top{position:relative;animation:animatetop 0.4s}@keyframes animatetop{from{top:-300px;opacity:0} to{top:0;opacity:1}}
-.border{background-color:white!important;transform: translateY(-150px);border: solid 1.5px white;width:100%;}
-.sub{font-size:18px!important;transform: translateY(-150px); font-weight: bolder;}
+.border{background-color:white!important;transform: translateY(-220px);border: solid 1.5px white;width:100%;}
+.sub{font-size:30px!important;transform: translateY(-230px); font-weight: bolder;}
 .center{text-align:center!important}
 .w3-display-bottomright{position:absolute;right:0;bottom:0}
 .padding-large{padding:12px 24px!important}  

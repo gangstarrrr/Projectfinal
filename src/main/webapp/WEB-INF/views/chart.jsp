@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>테스트</title>
+<title>HOLA JEJU</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/see_something.css">
@@ -23,7 +23,8 @@ h1 {text-align: center; padding: 20px 0;}
 .active {background-color: #b1c6e6;}
 #chart_body {width: 100%; height: 300px;}
 #img{background-image: url(/resources/img/%EA%B1%B8%EC%96%B4%EA%B0%90.gif);width: 220px;height: 190px;position: absolute;top: 40px;background-size: cover;}
-
+#chart_body rect{width:100%}
+#chart_body svg{width:100%}
 </style>
 <script>
 $(document).ready(function(){
@@ -71,7 +72,7 @@ $(document).ready(function(){
         	          title: 'amount'
         	        } ,
         	        height : 400,
-                    width  : 1600,
+                    width  : '100%',
                     pointSize: 15,
                     legend : 'none',
                     colors:['#7b9be2','#3d5f95'],
@@ -131,7 +132,7 @@ $(document).ready(function(){
 <body>
 <!-- 로딩이미지 -->
 <div id="dark" style="position: absolute; top: 0;left: 0; width: 100% ; height: 100%;display: none;background-color: rgba(255, 255, 255, 0.87); margin-left: : 0;z-index:10"></div>
-<div id="loading" style="position: absolute; top: 30%;left: 40%; width:400px;height:400px;background-image: url(/resources/img/loading_gif_servere.gif);z-index:10;background-position: center;background-size: cover;display:none">
+<div id="loading" style="position: absolute; top: 35vh;left: 40%; width: 30vh;height: 30vh;background-image: url(/resources/img/loading_gif_servere.gif);z-index:10;background-position: center;background-size: cover;display:none">
 </div>
 <!-- Navbar -->
 <div class="top">

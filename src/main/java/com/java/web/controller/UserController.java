@@ -55,9 +55,9 @@ public class UserController {
 			param.put("sql","insert");
 		}else {
 			byte[] bytes = file.getBytes();
-			String path = "C:/Users/goodee/Downloads/eclipse-jee-oxygen-3a-win32-x86_64/eclipse/workspace/Projectfinal/src/main/webapp/resources/upload/" + fileNm;
-	        String dns = "/resources/upload/" + fileNm;
-	        File f = new File(path);
+			String path = request.getSession().getServletContext().getRealPath("/") +"resources/upload/" + fileNm;
+			String dns = "http://gudi.iptime.org:10900/resources/upload/" + fileNm;
+			File f = new File(path);
 	        OutputStream out = new FileOutputStream(f);
 	        out.write(bytes);
 	        out.close();	        
@@ -85,7 +85,7 @@ public class UserController {
 			resultMap=new HashMap<String, Object>();
 			session.setAttribute("status", FinalUtil.NO);
 			map.put("status", FinalUtil.NO);
-			map.put("msg","PLZ CHECK YOU ID AND PASSWORD");
+			map.put("msg","PLZ CHECK YOU ID AND PASSWORD :)");
 		}else {
 			session.setAttribute("status", FinalUtil.OK);
 			map.put("status", FinalUtil.OK);
@@ -113,8 +113,8 @@ public class UserController {
 		}else {
 			
 			byte[] bytes = file.getBytes();
-			String path = "C:/Users/goodee/Downloads/eclipse-jee-oxygen-3a-win32-x86_64/eclipse/workspace/Projectfinal/src/main/webapp/resources/upload/" + fileNm;
-	        String dns = "/resources/upload/" + fileNm;
+			String path = request.getSession().getServletContext().getRealPath("/") +"resources/upload/" + fileNm;;
+	        String dns = "http://gudi.iptime.org:10900/resources/upload/" + fileNm;
 	        URLEncoder.encode(dns, "UTF-8");
 	        File f = new File(path);
 	        OutputStream out = new FileOutputStream(f);
@@ -143,13 +143,13 @@ public class UserController {
 		String id = request.getParameter("id");
 		param.put("id",id);
 		
-		if(id.equals("admin")) {
+		if(id.equals("admin123")) {
 			param.put("status",0);
 			param.put("msg","YOU CANNOT LEAVE");	
 		}else {
 			int status =(int)di.call(param);
 			param.put("status",status);
-			param.put("msg","BYE BYE");
+			param.put("msg","BYE BYE :(");
 		}
         return HttpUtil.makeJsonView(param);
     }
@@ -157,6 +157,7 @@ public class UserController {
 	@RequestMapping("/checkId")
     public @ResponseBody int idCheck(HttpServletRequest request) {
 		HashMap<String,Object> param = HttpUtil.getParamMap(request);
+		
 		param.put("sqlType","user.checkId");
 		param.put("sql","selectOne");
 		
@@ -169,16 +170,4 @@ public class UserController {
         return result;
     }
 	
-	@RequestMapping("/checkpw")
-	public @ResponseBody int checkpw(HttpServletRequest request) {
-		HashMap<String,Object> param = HttpUtil.getParamMap(request);
-		param.put("sqlType","user.checkpw");
-		param.put("sql","selectOne");
-		
-		int status = (int)di.call(param);
-		int result=0;
-		
-		if(status!=0) result=1;
-        return result;
-    }
 }

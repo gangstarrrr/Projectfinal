@@ -35,8 +35,11 @@
 		values
 		   (#{to_},#{title},#{message},#{from_});
 	</insert>
-	<select id="messagelist" parameterType="HashMap" resultType="HashMap">
-		select * from msg where to_=#{to_} and delYN='N'
+	<select id="messagelist_from" parameterType="HashMap" resultType="HashMap">
+		select * from msg where from_=#{from_} and delYN='N' order by no desc
+	</select>
+	<select id="messagelist_to" parameterType="HashMap" resultType="HashMap">
+		select * from msg where to_=#{to_} and delYN='N' order by no desc
 	</select>
 	
 	<update id="deletemessage" parameterType="HashMap">

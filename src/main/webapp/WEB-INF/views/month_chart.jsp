@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>월 별 차트</title>
+<title>HOLA JEJU</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd96e06027a0320acba403cccb6d68be&libraries=services,clusterer,drawing"></script>
@@ -42,6 +42,13 @@ h1 {text-align: center; padding: 20px 0;}
 .info .title {
     font-weight: bold;
 }
+#chart_body rect{width:100%}
+#chart_body svg{width:100%}
+#map_tag{
+width:15vh; height:20vh;
+background-image:url(/resources/img/%EB%B2%94%EB%A1%80.PNG); 
+z-index:10;position: absolute;right:10.5%;transform: translateY(-100%);
+background-position: center;background-size: cover;display:none}
 </style>
 <script>
 $(document).ready(function(){
@@ -49,7 +56,7 @@ $(document).ready(function(){
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new daum.maps.LatLng(33.378885, 126.530975), // 지도의 중심좌표
-        level: 9, // 지도의 확대 레벨
+        level: 10, // 지도의 확대 레벨
         mapTypeId : daum.maps.MapTypeId.ROADMAP // 지도종류
     };
 
@@ -108,7 +115,7 @@ $(document).ready(function(){
 	        	          title: 'amount'
 	        	        } ,
 	        	        height : 400,
-	                    width  : 1600,
+	                    width  : '100%',
 	                    pointSize: 15,
 	                    lineWidth: 8,
 	                    legend : 'none',
@@ -132,6 +139,7 @@ $(document).ready(function(){
 			$("#loading2").hide();
 			$("#dark2").hide();
 		    $(document).off('scroll touchmove mousewheel');
+		    document.getElementById('btn1').style.display='none';
 	});
 });	
 	$("#btn2").on("click",function(){
@@ -173,7 +181,7 @@ $(document).ready(function(){
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = { 
 			        center: new daum.maps.LatLng(33.378885, 126.530975), // 지도의 중심좌표
-			        level: 9 // 지도의 확대 레벨
+			        level: 10 // 지도의 확대 레벨
 			    };
 
 			var map = new daum.maps.Map(mapContainer, mapOption),
@@ -203,17 +211,17 @@ $(document).ready(function(){
 			    		for(var a=0; a<result.length;a++){
 			    			if(name==result[a][0]){
 				    			if(result[a][1]<=10000){
-				    				color= '#f0b058';
+				    				color= 'rgb(232,224,223)';
 				    			}else if(result[a][1]<=20000){
-				    				color= '#e59931';
+				    				color= 'rgb(237,223,185)';
 				    			}else if(result[a][1]<=30000){
-				    				color= '#f08224';
+				    				color= 'rgb(237,194,121)';
 				    			}else if(result[a][1]<=40000){
-				    				color= '#e56617';
+				    				color= 'rgb(169,188,139)';
 				    			}else if(result[a][1]<=50000){
-				    				color= '#d83e10';
+				    				color= 'rgb(115,165,152)';
 				    			}else{
-				    				color= '#d1241d';
+				    				color= 'rgb(215,127,110)';
 				    			}
 				    				
 				    		}	
@@ -228,7 +236,7 @@ $(document).ready(function(){
 			    	        strokeColor: 'rgba(255, 255, 255, 0.5)',//이거는 선색
 			    	        strokeOpacity: 0.8,
 			    	        fillColor: color,//이거는 배경색
-			    	        fillOpacity: 0.5 
+			    	        fillOpacity: 0.7
 			    	    }); 
 			    		// 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
 			    		daum.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
@@ -260,7 +268,9 @@ $(document).ready(function(){
 			$(window).scrollTop( top );
 			$("#loading2").hide();
 			$("#dark2").hide(); 
+			document.getElementById('map_tag').style.display='block';
 		    $(document).off('scroll touchmove mousewheel');
+		    document.getElementById('btn2').style.display='none';
 			});
 			
 		});
@@ -290,8 +300,8 @@ $(document).ready(function(){
 </head>
 <body>
 <!-- 로딩이미지 -->
-<div id="dark2" style="position: absolute; top: 0;left: 0; width: 100% ; height: 100%;display: none;background-color: rgba(255, 255, 255, 0.87); margin-left: : 0;z-index:10"></div>
-<div id="loading2" style="position: absolute; top: 30%;left: 40%; width:400px;height:400px;background-image: url(/resources/img/loading_gif_servere.gif);z-index:10;background-position: center;background-size: cover;display:none">
+<div id="dark2" style="position: absolute; top: 0;left: 0; width: 100% ; height: 100%;background-color: rgba(255, 255, 255, 0.87); margin-left: : 0;z-index:10;display:none"></div>
+<div id="loading2" style="position: absolute; top: 35vh;left: 40%; width: 30vh;height: 30vh;background-image: url(/resources/img/loading_gif_servere.gif);z-index:10;background-position: center;background-size: cover;display:none">
 </div>
 <!-- Navbar -->
 <div class="top">
@@ -325,10 +335,13 @@ $(document).ready(function(){
 			<div id="chart_body">Chart 영역</div>
 			<button type="button" id="btn1" class="btn1" style="background-color:#274a81">분석 & 결과보기</button>
 		</div>
+		<div style='height: 35px'></div>
 		<hr>
-        <div id="step3" style='height: 700px'>
-			<div id="map" style="width:1500px;height:650px;"></div>	
+        <div id="step3" style='height: 600px'>
+			<div id="map" style="height:550px;"></div>	
+			<div id="map_tag"></div>
 		</div>
+		
 		<button type="button" id="btn2" class="btn1" style="background-color:#274a81">분석 & 결과보기</button>
 		<hr>
 		<div id="step4">

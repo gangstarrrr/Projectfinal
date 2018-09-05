@@ -126,6 +126,7 @@ public class AnalysisController {
 			}
 			list.add(map);
 		}
+		System.out.println(list);
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("result", list);
 		JSONObject json = JSONObject.fromObject(JSONSerializer.toJSON(resultMap));
